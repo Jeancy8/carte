@@ -9,6 +9,7 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
+import { Icon, Avatar, Divider } from 'react-native-elements'
 
 import { MonoText } from '../components/StyledText';
 
@@ -21,7 +22,17 @@ export default function HomeScreen() {
       <Text>Jeux de carte</Text>
       </View>
       <View>
-        
+      <Avatar
+          size="xlarge"
+          source={{
+            uri:
+              'https://s3.amazonaws.com/uifaces/faces/twitter/adhamdannaway/128.jpg',
+          }}
+        showEditButton
+      />
+      </View>
+      <View>
+        <Divider style={{ backgroundColor: 'black' }} />
       </View>
       </ScrollView>
     </View>
@@ -208,4 +219,7 @@ const styles = StyleSheet.create({
     fontSize: 14,
     color: '#2e78b7',
   },
+  avatar: {
+    
+  }
 });
