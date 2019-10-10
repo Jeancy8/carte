@@ -13,7 +13,20 @@ import {
 import { MonoText } from '../components/StyledText';
 
 export default function HomeScreen() {
-  return (
+
+  return(
+    <View style={styles.container}>
+      <ScrollView style={styles.container} contentContainerStyle={styles.contentContainer}>
+      <View style={styles.welcomeContainer}>
+      <Text>Jeux de carte</Text>
+      </View>
+      <View>
+        
+      </View>
+      </ScrollView>
+    </View>
+  )
+  /* return (
     <View style={styles.container}>
       <ScrollView
         style={styles.container}
@@ -66,7 +79,7 @@ export default function HomeScreen() {
         </View>
       </View>
     </View>
-  );
+  ); */
 }
 
 HomeScreen.navigationOptions = {
