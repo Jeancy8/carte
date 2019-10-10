@@ -9,31 +9,74 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import { Icon, Avatar, Divider } from 'react-native-elements'
+import {
+  Icon,
+  Avatar,
+  Divider,
+  Input,
+  ListItem,
+  Button
+} from 'react-native-elements'
 
 import { MonoText } from '../components/StyledText';
 
 export default function HomeScreen() {
 
-  return(
+  const list = [
+    {
+      title: 'Appointments',
+      icon: 'av-timer'
+    },
+    {
+      title: 'Trips',
+      icon: 'flight-takeoff'
+    },
+  ]
+
+  return (
     <View style={styles.container}>
       <ScrollView style={styles.container} contentContainerStyle={styles.contentContainer}>
-      <View style={styles.welcomeContainer}>
-      <Text>Jeux de carte</Text>
-      </View>
-      <View>
-      <Avatar
-          size="xlarge"
-          source={{
-            uri:
-              'https://s3.amazonaws.com/uifaces/faces/twitter/adhamdannaway/128.jpg',
-          }}
-        showEditButton
-      />
-      </View>
-      <View>
-        <Divider style={{ backgroundColor: 'black' }} />
-      </View>
+        <View style={styles.welcomeContainer}>
+          <Text>Jeux de carte</Text>
+        </View>
+        <View>
+          <Avatar
+            size="xlarge"
+            source={{
+              uri:
+                'https://s3.amazonaws.com/uifaces/faces/twitter/adhamdannaway/128.jpg',
+            }}
+            showEditButton
+          />
+        </View>
+        <View>
+          <Divider style={{ backgroundColor: 'black' }} />
+          <Input
+            placeholder='BASIC INPUT'
+          />
+        </View>
+        <View>
+          {
+            list.map((item, i) => (
+              <ListItem
+                key={i}
+                title={item.title}
+                leftIcon={{ name: item.icon }}
+                bottomDivider
+                chevron
+              />
+            ))
+          }
+        </View>
+        <View>
+          <Button
+            icon={{
+              size: 15,
+              color: "white"
+            }}
+            title="Jouer"
+          />
+        </View>
       </ScrollView>
     </View>
   )
@@ -220,6 +263,6 @@ const styles = StyleSheet.create({
     color: '#2e78b7',
   },
   avatar: {
-    
+
   }
 });
