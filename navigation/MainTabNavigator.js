@@ -6,6 +6,7 @@ import TabBarIcon from '../components/TabBarIcon';
 import HomeScreen from '../screens/HomeScreen';
 import LinksScreen from '../screens/LinksScreen';
 import SettingsScreen from '../screens/SettingsScreen';
+import SearchScreen from '../screens/SearchScreen';
 
 const config = Platform.select({
   web: { headerMode: 'screen' },
@@ -67,8 +68,28 @@ SettingsStack.navigationOptions = {
 
 SettingsStack.path = '';
 
+const ScreenStack = createStackNavigator(
+  {
+    Home: SearchScreen,
+  },
+  config
+);
+
+ScreenStack.navigationOptions = {
+  tabBarLabel: 'Games',
+  tabBarIcon: ({ focused }) => (
+    <TabBarIcon
+      focused={focused}
+      name={'logo-game-controller-b'}
+    />
+  ),
+};
+
+ScreenStack.path = '';
+
 const tabNavigator = createBottomTabNavigator({
   HomeStack,
+  ScreenStack,
   LinksStack,
   SettingsStack,
 });
