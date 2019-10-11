@@ -8,39 +8,62 @@ import {
   Text,
   TouchableOpacity,
   View,
+  TextInput
 } from 'react-native';
 import {
   Icon,
   Avatar,
   Divider,
-  Input,
   ListItem,
   Button
 } from 'react-native-elements'
-
+import SearchInput, { createFilter } from 'react-native-search-filter';
 import { MonoText } from '../components/StyledText';
+const KEYS_TO_FILTERS = ['title'];
 
-export default function HomeScreen() {
+export default class HomeScreen extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      searchTerm: ''
+    }
+  }
 
-  const list = [
-    {
-      title: 'Appointments',
-      icon: 'av-timer'
-    },
-    {
-      title: 'Trips',
-      icon: 'flight-takeoff'
-    },
-  ]
+  searchUpdated(term) {
+    this.setState({ searchTerm: term })
+  }
 
-  return (
-    <View style={styles.container}>
+  render() {
+
+    const list = [
+      {
+        id: 1,
+        title: 'partie 1',
+      },
+      {
+        id: 2,
+        title: 'partie 2',
+      },
+      {
+        id: 3,
+        title: 'partie 3',
+      },
+      {
+        id: 4,
+        title: 'partie 4',
+      },
+    ]
+
+    const listFilter = list.filter(createFilter(this.state.searchTerm, KEYS_TO_FILTERS)) 
+    return (
+      <View style={styles.container}>
       <ScrollView style={styles.container} contentContainerStyle={styles.contentContainer}>
         <View style={styles.welcomeContainer}>
           <Text>Jeux de carte</Text>
         </View>
         <View>
           <Avatar
+          style={{height: 170}}
             size="xlarge"
             source={{
               uri:
@@ -49,25 +72,24 @@ export default function HomeScreen() {
             showEditButton
           />
         </View>
-        <View>
-          <Divider style={{ backgroundColor: 'black' }} />
-          <Input
-            placeholder='BASIC INPUT'
+        <View style={styles.container}>
+        <SearchInput 
+          onChangeText={(term) => { this.searchUpdated(term) }} 
+          style={styles.searchInput}
+          placeholder="Type a message to search"
           />
-        </View>
-        <View>
-          {
-            list.map((item, i) => (
-              <ListItem
-                key={i}
-                title={item.title}
-                leftIcon={{ name: item.icon }}
-                bottomDivider
-                chevron
-              />
-            ))
-          }
-        </View>
+        <ScrollView>
+          {listFilter.map(item => {
+            return (
+              <TouchableOpacity onPress={()=>alert(item.title)} key={item.id} style={styles.listItem}>
+                <View>
+                  <Text>{item.title}</Text>
+                </View>
+              </TouchableOpacity>
+            )
+          })}
+        </ScrollView>
+      </View>
         <View>
           <Button
             icon={{
@@ -79,61 +101,8 @@ export default function HomeScreen() {
         </View>
       </ScrollView>
     </View>
-  )
-  /* return (
-    <View style={styles.container}>
-      <ScrollView
-        style={styles.container}
-        contentContainerStyle={styles.contentContainer}>
-        <View style={styles.welcomeContainer}>
-          <Image
-            source={
-              __DEV__
-                ? require('../assets/images/robot-dev.png')
-                : require('../assets/images/robot-prod.png')
-            }
-            style={styles.welcomeImage}
-          />
-        </View>
-
-        <View style={styles.getStartedContainer}>
-          <DevelopmentModeNotice />
-
-          <Text style={styles.getStartedText}>Get started by opening</Text>
-
-          <View
-            style={[styles.codeHighlightContainer, styles.homeScreenFilename]}>
-            <MonoText>screens/HomeScreen.js</MonoText>
-          </View>
-
-          <Text style={styles.getStartedText}>
-            Change this text and your app will automatically reload.
-          </Text>
-        </View>
-
-        <View style={styles.helpContainer}>
-          <TouchableOpacity onPress={handleHelpPress} style={styles.helpLink}>
-            <Text style={styles.helpLinkText}>
-              Help, it didn’t automatically reload!
-            </Text>
-          </TouchableOpacity>
-        </View>
-      </ScrollView>
-
-      <View style={styles.tabBarInfoContainer}>
-        <Text style={styles.tabBarInfoText}>
-          This is a tab bar. You can edit it in:
-        </Text>
-
-        <View
-          style={[styles.codeHighlightContainer, styles.navigationFilename]}>
-          <MonoText style={styles.codeHighlightText}>
-            navigation/MainTabNavigator.js
-          </MonoText>
-        </View>
-      </View>
-    </View>
-  ); */
+    )
+  }
 }
 
 HomeScreen.navigationOptions = {
@@ -177,6 +146,8 @@ function handleHelpPress() {
 
 const styles = StyleSheet.create({
   container: {
+    display: 'flex',
+    flexDirection: 'column',
     flex: 1,
     backgroundColor: '#fff',
   },
@@ -262,7 +233,18 @@ const styles = StyleSheet.create({
     fontSize: 14,
     color: '#2e78b7',
   },
-  avatar: {
-
+  listView : {
+    display: 'flex',
+    bottom: 0,
+  },
+  listItem:{
+    borderBottomWidth: 0.5,
+    borderColor: 'rgba(0,0,0,0.3)',
+    padding: 10
+  },
+  searchInput:{
+    padding: 10,
+    borderColor: '#CCC',
+    borderWidth: 1
   }
 });
