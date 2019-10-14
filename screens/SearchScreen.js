@@ -1,25 +1,19 @@
 import * as WebBrowser from 'expo-web-browser';
 import React from 'react';
 import {
-  Image,
   Platform,
   ScrollView,
   StyleSheet,
   Text,
   TouchableOpacity,
-  View,
-  TextInput
+  View
 } from 'react-native';
 import {
-  Icon,
   Avatar,
-  Divider,
-  ListItem,
-  Button
 } from 'react-native-elements'
 import SearchInput, { createFilter } from 'react-native-search-filter';
-import { MonoText } from '../components/StyledText';
 const KEYS_TO_FILTERS = ['title'];
+import { Chip, Button } from 'react-native-paper';
 
 export default class SearchScreen extends React.Component {
   constructor(props) {
@@ -34,6 +28,8 @@ export default class SearchScreen extends React.Component {
   }
 
   render() {
+
+    const {navigate} = this.props.navigation;
 
     const list = [
       {
@@ -67,9 +63,8 @@ export default class SearchScreen extends React.Component {
             size="xlarge"
             source={{
               uri:
-                'https://s3.amazonaws.com/uifaces/faces/twitter/adhamdannaway/128.jpg',
+                'https://i0.wp.com/bonplangratos.fr/wp-content/media/4-as-jeu-de-cartes.jpg?fit=710%2C473&ssl=1',
             }}
-            showEditButton
           />
         </View>
         <View style={styles.container}>
@@ -83,7 +78,7 @@ export default class SearchScreen extends React.Component {
             return (
               <TouchableOpacity onPress={()=>alert(item.title)} key={item.id} style={styles.listItem}>
                 <View>
-                  <Text>{item.title}</Text>
+                <Chip onPress={() => console.log('Pressed')}>{item.title}</Chip>
                 </View>
               </TouchableOpacity>
             )
@@ -92,12 +87,17 @@ export default class SearchScreen extends React.Component {
       </View>
         <View>
           <Button
-            icon={{
-              size: 15,
-              color: "white"
-            }}
-            title="Jouer"
-          />
+           onPress={() => navigate('Home')}
+          >
+            Jouer
+          </Button>
+        </View>
+        <View>
+          <Button
+            onPress={() => navigate('Home')}
+          >
+            Retour
+          </Button>
         </View>
       </ScrollView>
     </View>

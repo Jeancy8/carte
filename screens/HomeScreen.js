@@ -8,18 +8,17 @@ import {
   Text,
   TouchableOpacity,
   View,
-  TextInput
+  Dimensions
 } from 'react-native';
 import {
   Icon,
-  Avatar,
   Divider,
   ListItem,
-  Button
 } from 'react-native-elements'
 import SearchInput, { createFilter } from 'react-native-search-filter';
 import { MonoText } from '../components/StyledText';
 const KEYS_TO_FILTERS = ['title'];
+import { Avatar, Button, Card, TextInput, DefaultTheme, Provider as PaperProvider } from 'react-native-paper';
 
 export default class HomeScreen extends React.Component {
   constructor(props) {
@@ -34,6 +33,17 @@ export default class HomeScreen extends React.Component {
   }
 
   render() {
+    const theme = {
+      ...DefaultTheme,
+      roundness: 2,
+      colors: {
+        ...DefaultTheme.colors,
+        primary: '#3498db',
+        accent: '#f1c40f',
+      },
+      dark: true,
+    };
+    const {navigate} = this.props.navigation;
 
     const list = [
       {
@@ -56,51 +66,45 @@ export default class HomeScreen extends React.Component {
 
     const listFilter = list.filter(createFilter(this.state.searchTerm, KEYS_TO_FILTERS)) 
     return (
+      <PaperProvider theme={theme}>
       <View style={styles.container}>
       <ScrollView style={styles.container} contentContainerStyle={styles.contentContainer}>
         <View style={styles.welcomeContainer}>
           <Text>Jeux de carte</Text>
         </View>
-        <View>
-          <Avatar
-          style={{height: 170}}
-            size="xlarge"
+        <View style={{flex:1, alignItems: 'center'}}>
+        <Avatar.Image
+            width={120}
+            height={120}
+            rounded
             source={{
               uri:
-                'https://s3.amazonaws.com/uifaces/faces/twitter/adhamdannaway/128.jpg',
+                'https://i0.wp.com/bonplangratos.fr/wp-content/media/4-as-jeu-de-cartes.jpg?fit=710%2C473&ssl=1',
             }}
-            showEditButton
-          />
+        />
         </View>
-        <View style={styles.container}>
-        <SearchInput 
-          onChangeText={(term) => { this.searchUpdated(term) }} 
-          style={styles.searchInput}
-          placeholder="Type a message to search"
-          />
-        <ScrollView>
-          {listFilter.map(item => {
-            return (
-              <TouchableOpacity onPress={()=>alert(item.title)} key={item.id} style={styles.listItem}>
-                <View>
-                  <Text>{item.title}</Text>
-                </View>
-              </TouchableOpacity>
-            )
-          })}
-        </ScrollView>
-      </View>
+        <Card>
+          <Card.Actions>
+          <View style={styles.container}>
+          <Text style={styles.developmentModeText}>Bienvenue dans le jeux de Carte</Text>
+          <TextInput
+            label='Taper votre pseudo'
+            value={this.state.text}
+            onChangeText={text => this.setState({ text })}
+            />
+        </View>
+          </Card.Actions>
+        </Card>
         <View>
           <Button
-            icon={{
-              size: 15,
-              color: "white"
-            }}
-            title="Jouer"
-          />
+            onPress={() => navigate('Search')}
+          >
+            Continuer
+          </Button>
         </View>
       </ScrollView>
     </View>
+    </PaperProvider>
     )
   }
 }
