@@ -15,7 +15,7 @@ import SearchInput, { createFilter } from 'react-native-search-filter';
 const KEYS_TO_FILTERS = ['title'];
 import { Chip, Button } from 'react-native-paper';
 
-export default class SearchScreen extends React.Component {
+export default class GameScreen extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -31,26 +31,6 @@ export default class SearchScreen extends React.Component {
 
     const {navigate} = this.props.navigation;
 
-    const list = [
-      {
-        id: 1,
-        title: 'partie 1',
-      },
-      {
-        id: 2,
-        title: 'partie 2',
-      },
-      {
-        id: 3,
-        title: 'partie 3',
-      },
-      {
-        id: 4,
-        title: 'partie 4',
-      },
-    ]
-
-    const listFilter = list.filter(createFilter(this.state.searchTerm, KEYS_TO_FILTERS)) 
     return (
       <View style={styles.container}>
       <ScrollView style={styles.container} contentContainerStyle={styles.contentContainer}>
@@ -67,50 +47,13 @@ export default class SearchScreen extends React.Component {
             }}
           />
         </View>
-        <View style={styles.container}>
-        <Button
-           onPress={() => navigate('Game')}
-          >
-            Créer une partie
-          </Button>
-        <SearchInput 
-          onChangeText={(term) => { this.searchUpdated(term) }} 
-          style={styles.searchInput}
-          placeholder="Rechercher une partie"
-          />
-        <ScrollView>
-          {listFilter.map(item => {
-            return (
-              <TouchableOpacity onPress={()=>alert(item.title)} key={item.id} style={styles.listItem}>
-                <View>
-                <Chip onPress={() => console.log('Pressed')}>{item.title}</Chip>
-                </View>
-              </TouchableOpacity>
-            )
-          })}
-        </ScrollView>
-      </View>
-        <View>
-          <Button
-           onPress={() => navigate('Game')}
-          >
-            Jouer
-          </Button>
-        </View>
-        <View>
-          <Button
-            onPress={() => navigate('Home')}
-          >
-            Retour
-          </Button>
-        </View>
       </ScrollView>
     </View>
     )
   }
 }
 
-SearchScreen.navigationOptions = {
+GameScreen.navigationOptions = {
   header: null,
 };
 

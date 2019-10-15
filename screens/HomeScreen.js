@@ -97,7 +97,7 @@ export default class HomeScreen extends React.Component {
         </Card>
         <View>
           <Button
-            onPress={() => navigate('Search')}
+            onPress={() => navigate('Search', {pseudo: this.state.text})}
           >
             Continuer
           </Button>
